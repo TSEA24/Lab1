@@ -142,7 +142,7 @@ fir_kernel
 
 	;;  Hint: Remember to set ar0, step0, step1, bot1, and top1
 	;;  appropriately before starting the convolution.
-	set ar0, r0;
+	move ar0, r0;
 	set step0, 1;
 	set step1, 1;
 	set bot1, coefficients;
@@ -154,6 +154,7 @@ falt
 	move r5,ar1
 	convss acr0,(--ar0),(ar1++%)
 ;;Store r5 here
+	nop
 	move ar1, r5
 
 
@@ -178,9 +179,9 @@ falt
 
 	;; Hint: You may need some scaling in this instruction. Without scaling
 	;; this will move bit 31-16 into r0 (after saturation and rounding)
-	move r0,sat rnd acr0
+	move r0,sat rnd div2 acr0
 	nop
-
+	clr acr0
 	out 0x11,r0		; Output a sample
 	ret
 
@@ -216,38 +217,38 @@ coefficients
 ;;;	.dw 32767		;
 	;;;.dw 0x7fff		; Enter hexadecimal number like this
 	;;;might need to write 0x...
-	.dw 000e
-	.dw 001f
-	.dw 003e
-	.dw 0076
-	.dw 00ce
-	.dw 014d
-	.dw 01f6
-	.dw 02c7
-	.dw 03ba
-	.dw 04c5
-	.dw 05d7
-	.dw 06e2
-	.dw 07d3
-	.dw 089a
-	.dw 0927
-	.dw 0971
-	.dw 0971
-	.dw 0927
-	.dw 089a
-	.dw 07d3
-	.dw 06e2
-	.dw 05d7
-	.dw 04c5
-	.dw 03ba
-	.dw 02c7
-	.dw 01f6
-	.dw 014d
-	.dw 00ce
-	.dw 0076
-	.dw 003e
-	.dw 001f
-	.dw 000e
+	.dw 0x000e
+	.dw 0x001f
+	.dw 0x003e
+	.dw 0x0076
+	.dw 0x00ce
+	.dw 0x014d
+	.dw 0x01f6
+	.dw 0x02c7
+	.dw 0x03ba
+	.dw 0x04c5
+	.dw 0x05d7
+	.dw 0x06e2
+	.dw 0x07d3
+	.dw 0x089a
+	.dw 0x0927
+	.dw 0x0971
+	.dw 0x0971
+	.dw 0x0927
+	.dw 0x089a
+	.dw 0x07d3
+	.dw 0x06e2
+	.dw 0x05d7
+	.dw 0x04c5
+	.dw 0x03ba
+	.dw 0x02c7
+	.dw 0x01f6
+	.dw 0x014d
+	.dw 0x00ce
+	.dw 0x0076
+	.dw 0x003e
+	.dw 0x001f
+	.dw 0x000e
 coefficients_end
 ;;; ----------------------------------------------------------------------
 ;;; Stack space
@@ -258,3 +259,4 @@ stackarea
 
 
 #include "sanitycheck.asm"
+dgfgf
