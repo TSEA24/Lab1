@@ -7,7 +7,7 @@
 ;;; ----------------------------------------------------------------------
 ;;; Main loop. This loop ensures that handle_sample is called 1000 times.
 ;;; ----------------------------------------------------------------------
-	set r31,1000
+	set r31,100
 loop
 	call handle_sample
 
@@ -27,7 +27,12 @@ loop
 ;;; Once all registers are saved it calls fir_kernel to perform the actual
 ;;; filtering.
 ;;; ----------------------------------------------------------------------
+handle_sample_two
+	ret
 handle_sample
+	push r30
+	set r30, 10
+loop_inner
 	push r5 ;added
 	push r0
 	push r1
@@ -98,9 +103,14 @@ handle_sample
 	move ar1,r1
 	move ar0,r0
 
+
 	pop r1
 	pop r0
 	pop r5
+
+	add r30, -1
+	jump.ne loop_inner
+	pop r30
 	ret
 
 
@@ -132,6 +142,7 @@ initfirkernel
 ;;; ----------------------------------------------------------------------
 	.code
 fir_kernel
+
 
   in r0,0x10		; Read input sample -> r0
 
