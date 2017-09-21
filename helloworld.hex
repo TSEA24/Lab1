@@ -1,9 +1,0 @@
-; Senior assembler (V2015-TSEA26-02)
-code
-02480000 7 helloworld.asm
-02000000 19 helloworld.asm
-6840a402 20 helloworld.asm
-04c00011 26 helloworld.asm
-41c00001 27 helloworld.asm
-04c00013 38 helloworld.asm
-rom0
